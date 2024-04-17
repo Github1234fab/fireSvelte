@@ -12,18 +12,18 @@ export async function createData(data) {
   }
 }
 
-// Récupération des données depuis Firestore
-// export async function fetchData() {
-//   const snapshot = await db.collection("commande").get();
-//   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-// }
 
-// Mise à jour d'un document dans Firestore
-// export async function updateData(id, newData) {
-//   await db.collection("commande").doc(id).update(newData);
-// }
+export async function fetchData() {
+  const snapshot = await db.collection("commande").get();
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+}
 
-// Suppression d'un document dans Firestore
-// export async function deleteData(id) {
-//   await db.collection("commande").doc(id).delete();
-// }
+
+export async function updateData(id, newData) {
+  await db.collection("commande").doc(id).update(newData);
+}
+
+
+export async function deleteData(id) {
+  await db.collection("commande").doc(id).delete();
+}

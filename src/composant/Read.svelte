@@ -1,11 +1,9 @@
 <script>
-  // Importez fetchData depuis firebaseService.js
+
   import { fetchData } from './firebaseService.js';
   import { onMount } from 'svelte';
-
   let produits = [];
 
-  // Fonction pour charger les données au chargement du composant
   async function loadProducts() {
     try {
       produits = await fetchData();
@@ -14,16 +12,15 @@
       console.error('Erreur lors du chargement des produits :', error);
     }
   }
-
-  // Chargez les produits au chargement du composant
+ 
   onMount(loadProducts);
 </script>
 
 <h1>Liste de courses</h1>
 
 <div>
-  <!-- Afficher la liste des produits -->
-  {#if produits.length > 0}
+ 
+ {#if produits.length > 0}
     <ul>
       {#each produits as produit}
         <li>{produit.produit} - Quantité : {produit.nombre}</li>
@@ -32,4 +29,4 @@
   {:else}
     <p>Aucun produit enregistré pour le moment.</p>
   {/if}
-</div>
+</div> 

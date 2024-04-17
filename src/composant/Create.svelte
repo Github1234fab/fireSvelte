@@ -1,33 +1,27 @@
 <script>
-  // Importez la fonction createData depuis firebaseService.js
+
   import { createData } from './firebaseService.js';
-
   let produit = '';
-  let nombre = 1; // Définissez une valeur par défaut pour la quantité
+  let nombre = 1; 
 
-  // Fonction pour créer un nouveau document Firestore avec les données saisies par l'utilisateur
   async function addNewData() {
     if (produit.trim() === '') {
       console.log('Veuillez saisir un produit');
       return;
     }
-
     const newData = {
       produit: produit.trim(),
-      nombre: nombre, // Utilisez la quantité saisie par l'utilisateur
+      nombre: nombre,
     };
 
-    // Appelez la fonction createData pour ajouter les nouvelles données
     await createData(newData);
     console.log('Document ajouté avec succès !');
 
-    // Réinitialisez les champs après l'ajout
     produit = '';
-    nombre = 1; // Réinitialisez la quantité à sa valeur par défaut
+    nombre = 1; 
   }
-
   async function handleSubmit() {
-    // Appel de la fonction pour ajouter le produit dans Firestore
+
     await addNewData();
   }
 </script>
