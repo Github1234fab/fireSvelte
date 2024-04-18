@@ -10,6 +10,7 @@ import {
   addDoc,
   query,
   getDocs,
+  writeBatch, // Ajoutez cette ligne
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -82,4 +83,17 @@ export async function fetchAllData(collectionName) {
     console.error("Erreur lors de la récupération des données :", error);
     throw error;
   }
+}
+
+// Supprimer tous les documents d'une collection
+export async function deleteAllData(collectionName) {
+  const q = query(collection(db, collectionName));
+  const querySnapshot = await getDocs(q);
+  const batch = writeBatch(db);
+
+  querySnapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
 }

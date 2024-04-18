@@ -11,7 +11,7 @@
 
     const produitTrimmed = produit.trim();
 
-    await createData("maCollection", produitTrimmed, nombre);
+    await createData("commande", produitTrimmed, nombre);
     console.log('Document ajouté avec succès !');
 
     produit = '';
