@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {
   getFirestore,
   doc,
@@ -96,4 +96,56 @@ export async function deleteAllData(collectionName) {
   });
 
   await batch.commit();
+}
+
+// Authentification
+const auth = getAuth(app);
+
+export async function register(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("Utilisateur créé avec succès :", user.uid);
+    return user.uid;
+  } catch (error) {
+    console.error("Erreur lors de la création de l'utilisateur :", error);
+    throw error;
+  }
+}
+
+//créer une liste de course avec l'id de l'utilisateur
+export async function createShoppingList(userId, shoppingList) {
+  try {
+    const data = { userId, shoppingList };
+    const docRef = await addDoc(collection(db, "shoppingLists"), data);
+    console.log("Liste de courses ajoutée avec ID :", docRef.id);
+    return docRef.id;
+  } catch (error) {
+    console.error("Erreur lors de l'ajout de la liste de courses :", error);
+    throw error;
+  }
+}
+
+//afficher le produti saisi par l'utilisateur
+export async function fetchUserData(collectionName, userId) {
+  try {
+    const querySnapshot = await getDocs(query(collection(db, collectionName), where("userId", "==", userId)));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données :", error);
+    throw error;
+  }
+}
+
+//log du user
+
+export async function login(email, password) {
+  const auth = getAuth();
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user.uid;
+  } catch (error) {
+    console.error("Erreur lors de la connexion :", error);
+    throw error;
+  }
 }
